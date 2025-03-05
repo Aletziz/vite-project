@@ -1,3 +1,4 @@
+-- Active: 1740859151102@@127.0.0.1@3306
 /*
   # Create products table
 
