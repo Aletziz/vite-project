@@ -34,7 +34,7 @@ export function Hero() {
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
         <img
           className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-          src="https://picsum.photos/seed/polos-sales/1200/800"
+          src="https://emprendedor.com/wp-content/uploads/2021/08/20160509124314-ventas-1-1568x1046.jpeg"
           alt="Productos de Polo's Sales"
         />
       </div>

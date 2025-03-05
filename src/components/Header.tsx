@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
-import { ShoppingCartIcon, MagnifyingGlassIcon, UserIcon } from '@heroicons/react/24/outline';
-import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
-import { CartModal } from './CartModal';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import {
+  ShoppingCartIcon,
+  MagnifyingGlassIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
+import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
+import { CartModal } from "./CartModal";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Header({ onSearch }: { onSearch?: (query: string) => void }) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { totalItems } = useCart();
   const { user, isAuthenticated, logout } = useAuth();
@@ -21,7 +25,7 @@ export function Header({ onSearch }: { onSearch?: (query: string) => void }) {
 
   const handleLogout = async () => {
     await logout();
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -30,9 +34,11 @@ export function Header({ onSearch }: { onSearch?: (query: string) => void }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-8">
             <Link to="/">
-              <h1 className="text-3xl font-bold text-primary-600">Polo's Sales</h1>
+              <h1 className="text-3xl font-bold text-primary-600">
+                Polo's Sales
+              </h1>
             </Link>
-            <form onSubmit={handleSearch} className="relative">
+            {/*<form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
                 placeholder="Buscar productos..."
@@ -43,7 +49,7 @@ export function Header({ onSearch }: { onSearch?: (query: string) => void }) {
               <button type="submit" className="absolute left-3 top-3">
                 <MagnifyingGlassIcon className="h-5 w-5 text-primary-400" />
               </button>
-            </form>
+            </form>*/}
           </div>
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
@@ -52,11 +58,14 @@ export function Header({ onSearch }: { onSearch?: (query: string) => void }) {
                   Hola, <span className="font-semibold">{user?.name}</span>
                 </div>
                 {user?.isAdmin && (
-                  <Link to="/admin" className="text-sm text-primary-600 hover:text-primary-800">
+                  <Link
+                    to="/admin"
+                    className="text-sm text-primary-600 hover:text-primary-800"
+                  >
                     Panel Admin
                   </Link>
                 )}
-                <button 
+                <button
                   onClick={handleLogout}
                   className="text-sm text-primary-600 hover:text-primary-800"
                 >
@@ -64,12 +73,15 @@ export function Header({ onSearch }: { onSearch?: (query: string) => void }) {
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="flex items-center text-gray-600 hover:text-primary-600">
+              <Link
+                to="/login"
+                className="flex items-center text-gray-600 hover:text-primary-600"
+              >
                 <UserIcon className="h-6 w-6 mr-1" />
                 <span>Iniciar sesión</span>
               </Link>
             )}
-            <button 
+            <button
               className="relative p-2"
               onClick={() => setIsCartOpen(true)}
             >
@@ -83,7 +95,7 @@ export function Header({ onSearch }: { onSearch?: (query: string) => void }) {
           </div>
         </div>
       </div>
-      
+
       <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   );
