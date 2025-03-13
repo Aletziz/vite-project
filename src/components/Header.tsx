@@ -38,7 +38,7 @@ export function Header({ onSearch }: { onSearch?: (query: string) => void }) {
                 Polo's Sales
               </h1>
             </Link>
-            {/*<form onSubmit={handleSearch} className="relative">
+            <form onSubmit={handleSearch} className="relative">
               <input
                 type="text"
                 placeholder="Buscar productos..."
@@ -49,7 +49,7 @@ export function Header({ onSearch }: { onSearch?: (query: string) => void }) {
               <button type="submit" className="absolute left-3 top-3">
                 <MagnifyingGlassIcon className="h-5 w-5 text-primary-400" />
               </button>
-            </form>*/}
+            </form>
           </div>
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (

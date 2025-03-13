@@ -1,14 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { useAuth } from "../context/AuthContext";
-import { products } from "../data/products";
 import { PlusIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { AddProductModal } from "../components/AddProductModal";
+import { supabase } from "../supabaseClient";
+
+interface Product {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  stock: number;
+  image: string;
+}
 
 export function AdminPage() {
   const { user } = useAuth();
   const [showAddModal, setShowAddModal] = useState(false);
-  console.log(showAddModal);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data, error } = await supabase.from("products").select("*");
+      if (error) {
+        console.error("Error fetching products:", error);
+      } else if (data) {
+        setProducts(data as Product[]);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleAddProduct = async (newProduct: Omit<Product, "id">) => {
+    const { data, error } = await supabase
+      .from("products")
+      .insert([newProduct]);
+    if (error) {
+      console.error("Error adding product:", error);
+    } else if (data) {
+      setProducts([...products, data[0] as Product]);
+      setShowAddModal(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
@@ -155,6 +191,13 @@ export function AdminPage() {
       </main>
 
       <Footer />
+
+      {showAddModal && (
+        <AddProductModal
+          onClose={() => setShowAddModal(false)}
+          onAddProduct={handleAddProduct}
+        />
+      )}
     </div>
   );
 }
